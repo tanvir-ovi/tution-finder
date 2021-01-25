@@ -3,47 +3,23 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
+
+//body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//import routes
+const handleSignUp = require('./controllers/signup');
+const userDetails = require('./controllers/userDetails');
+
+//Database connection
 mongoose.set( 'useUnifiedTopology', 'true' );
 mongoose.set('useFindAndModify', 'true');
 mongoose.connect('mongodb://localhost:27017/tutionfinderDB',{useNewUrlParser:true});
 
-const userInformation = [];
+app.post("/api/signup", (req, res) =>  handleSignUp(req, res));
 
-const userInformationSchema = {
-	userName:String,
-  name: String,
-  type:String
-};
-
-const UserInformation = mongoose.model('UserInformation',userInformationSchema);
-
-app.route("/api/signup")
-  .get((req, res) => {
-    UserInformation.find({}, function(err,foundUser) {
-			if(!err) {
-				res.json(foundUser);
-			} else{
-				res.json(err);
-			}
-		});
-  })
-  .post((req, res) => {
-    const newUserInformation = new UserInformation({
-			userName:req.body.userName,
-      name: req.body.name,
-			type:req.body.type
-		});
-		newUserInformation.save(function(err) {
-			if(!err) {
-				res.json("succesfully added one userInformation");
-			} else {
-				res.json(err);
-			}
-		});
-  })
-
+app.post("/api/userdetail", (req, res) => userDetails(req,res))
+  
 app.listen(3000,
   () => console.log("app is running on port 3000")
 );
