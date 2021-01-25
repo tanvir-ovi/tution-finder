@@ -17,12 +17,31 @@ const userDetailsSchema = Schema({
   experience: String,
   bio:String,
   skills:String,
-  Subject:String,
+  subject:String,
 });
 const UserDetail = mongoose.model('UserDetail', userDetailsSchema);
+
+// create userMessagesSchema
+const userMessagesSchema = Schema({
+	user_id: String,
+  user_sent_id: String,
+  message: String
+});
+const UserMessage = mongoose.model('UserMessage', userMessagesSchema);
+
+// create gurdianPanalSchema
+const gurdianPanalSchema = Schema({
+	subjectList: String,
+  tutionDayPerMonth: Number,
+  class: Number,
+  slaryRange: String
+});
+const GurdianPanal = mongoose.model('GurdianPanal', gurdianPanalSchema);
 
 
 module.exports = {
   UserInformation,
-  UserDetail
+  UserDetail,
+  UserMessage,
+  GurdianPanal
 }

@@ -6,7 +6,7 @@ const userDetails = (req,res) => {
       experience: req.body.experience,
 			bio:req.body.bio,
 			skills:req.body.skills,
-			Subject:req.body.Subject,
+			subject:req.body.subject,
 		});
 		NewUserDetails.save(function(err) {
 			if(!err) {
